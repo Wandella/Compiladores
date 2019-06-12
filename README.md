@@ -1,1 +1,1 @@
-# Compiladores-Fazendo um compiladore
+# Compiladores-Fazendo um compilador
