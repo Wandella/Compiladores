@@ -1,0 +1,6 @@
+program
+ integer : a;
+begin
+ a := 886 * 184
+end
+
