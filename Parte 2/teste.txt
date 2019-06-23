@@ -1,6 +1,6 @@
 program
  integer : a;
 begin
- a := 886 * 184
+ a := 886 + 8
 end
 

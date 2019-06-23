@@ -78,9 +78,10 @@ extern int yydebug;
     WRITE = 288,
     WHILE = 289,
     NOT = 290,
-    ABRE_PARENTESES = 291,
-    FECHA_PARENTESES = 292,
-    UMINUS = 293
+    SAMUEL = 291,
+    ABRE_PARENTESES = 292,
+    FECHA_PARENTESES = 293,
+    UMINUS = 294
   };
 #endif
 /* Tokens.  */
@@ -117,9 +118,10 @@ extern int yydebug;
 #define WRITE 288
 #define WHILE 289
 #define NOT 290
-#define ABRE_PARENTESES 291
-#define FECHA_PARENTESES 292
-#define UMINUS 293
+#define SAMUEL 291
+#define ABRE_PARENTESES 292
+#define FECHA_PARENTESES 293
+#define UMINUS 294
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -132,7 +134,7 @@ union YYSTYPE
  int integer;
  
 
-#line 136 "y.tab.h" /* yacc.c:1909  */
+#line 138 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

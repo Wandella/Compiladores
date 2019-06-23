@@ -15,6 +15,11 @@ quebra \n
 delim [ \t] 
 ws {delim}+
 
+/*novo*/
+igualzinho =
+
+samuel samuel
+
 /*palavras reservadas*/
 begin begin
 boolean boolean
@@ -58,15 +63,13 @@ constante \-?{digito}+
 
 /*operadores*/
 menorIgual <=
-maiorIgual \>\=
-diferente {not}\=
+maiorIgual >=
+diferente {not}=
 exponencial \*\*
-op [\|\&\<\>\=\+\-\*\/]|{diferente}|{not}|{menorIgual}|{maiorIgual}|{exponencial}
+op [\|\&\<\>\+\-\*\/]|{diferente}|{not}|{menorIgual}|{maiorIgual}|{exponencial}
 
 /*atribuicao*/
 atribuicao :=
-/*novo*/
-igual =
 
 abreParenteses \(
 fechaParenteses \)
@@ -74,11 +77,15 @@ pontoVirgula ;
 doisPontos :
 virgula ,
 
+proxOp [{constante}{identificador}]/{op}
+
 %%
 {quebra} {extern int lineno; lineno++; printf("\n%d-",lineno); }
-{ws} {printf("Q");/*nenhuma acao e nenhum retorno*/} /*Espaços em branco, tabulação e quebra de linha devem ser ignorados.*/
+{ws} {/*nenhuma acao e nenhum retorno*/} /*Espaços em branco, tabulação e quebra de linha devem ser ignorados.*/
 
 {comentario} {printf("<COMENT,'%s'>\n",yytext);}
+
+{samuel} {printf("<IGUAL,'%s'>\n",yytext); return SAMUEL;}
 
 {begin} {printf("<BEGIN,'%s'>\n",yytext); return BEGIN_;}
 {boolean} {printf("<BOOLEAN,'%s'>\n",yytext); return BOOLEAN;}
@@ -107,9 +114,8 @@ virgula ,
 {while} {printf("<WHILE,'%s'>\n",yytext); return WHILE;}
 {not} {printf("<NOT,'%s'>\n",yytext); return NOT;}
 
+{proxOp} {printf("<PROXOP,'%s'>\n",yytext); return PROX_OPERADOR;}
 {op} {printf("<OP,'%s'>\n",yytext); return OPERADOR;}
-
-{igual} {printf("<IGUAL,'%s'>\n",yytext); return IGUAL;}
 
 {identificador} {printf("<ID,'%s'>\n",yytext); return IDENTIFICADOR;}
 

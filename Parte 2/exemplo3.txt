@@ -1,0 +1,10 @@
+program
+	integer : @;
+begin
+	@ := 78569;
+	while (@ > 10) do
+		write(@+10);
+		@ := @ - 10;
+	endwhile;
+	write @
+end

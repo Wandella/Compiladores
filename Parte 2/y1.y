@@ -9,6 +9,7 @@
 %token <integer> INTEGER
 %token <constante> CONSTANTE
 %token <operador> OPERADOR
+%token <proxOp> PROX_OPERADOR
 
 %token <program> PROGRAM_
 %token <identificador> IDENTIFICADOR
@@ -41,9 +42,10 @@
 %token <write> WRITE
 %token <while> WHILE
 %token <not> NOT
+%token <samuel> SAMUEL
+
 %token <abre_parenteses> ABRE_PARENTESES
 %token <fecha_parenteses> FECHA_PARENTESES
-%token <igual> IGUAL
 
 //%type <program> programa;
 //%token <''> M0;
@@ -62,7 +64,7 @@ line: {printf("q");} |
 programa: PROGRAM_ {printf("0");} M2 {printf("0");} declaracoes {printf("0");} M0 {printf("0");} block 
 	| /**/ {printf("0");};
 
-block: BEGIN_ lista_comandos M0 END;
+block: {printf(" BLOCO0 ");} BEGIN_ {printf(" BLOCO1 ");} lista_comandos {printf(" BLOCO2 ");} M0 END {printf(" BLOCO3 ");};
 
 declaracoes: declaracoes M0 declaracao PONTO_VIRGULA
 	| vazio {printf("1");};
@@ -82,7 +84,7 @@ M0: vazio;
 M1: vazio;
 M2: vazio;
 
-def_de_tipo: TYPE nome_do_tipo M0 IGUAL M1 definicao_de_tipo;
+def_de_tipo: TYPE nome_do_tipo M0 SAMUEL M1 definicao_de_tipo;
 
 nome_do_tipo: IDENTIFICADOR;
 
@@ -96,7 +98,7 @@ decl_de_proc: proc_cab proc_corpo;
 
 proc_cab: tipo_retornado PROCEDURE M0 nome_do_proc espec_de_parametros;
 
-proc_corpo: DOIS_PONTOS declaracoes M0 bloco emit_return
+proc_corpo: DOIS_PONTOS declaracoes M0 block emit_return
 	| emit_return;
 
 emit_return: vazio ;
@@ -116,8 +118,8 @@ modo: VALUE
 
 nome_do_proc: IDENTIFICADOR;
 
-lista_comandos: {printf("COM");}comando 
-	| {printf("LC");}lista_comandos PONTO_VIRGULA M0 comando;
+lista_comandos: {printf(" LISTA_COMANDOS1_1 ");}comando {printf(" LISTA_COMANDOS1_2 ");} 
+	| {printf(" LISTA_COMANDOS2_0 ");} lista_comandos {printf(" LISTA_COMANDOS2_1 ");} PONTO_VIRGULA M0 {printf(" LISTA_COMANDOS2_2 ");} comando {printf(" LISTA_COMANDOS2_3 ");};
 
 
 lista_ids: IDENTIFICADOR 
@@ -128,26 +130,26 @@ vazio: /*vazio*/;
 espec_de_parametros: ABRE_PARENTESES lista_de_parametros FECHA_PARENTESES
 	| vazio;
 
-comando: comando_atribuicao
-	|comando_while
-	|comando_repeat
-	|comando_if
-	|comando_read
-	|comando_write
-	|comando_return
-	|comando_exit
-	|chamada_de_procedimento
-	|rotulo DOIS_PONTOS comando;
+comando: {printf(" COMANDO_A ");}comando_atribuicao
+	|{printf(" COMANDO_WH ");}comando_while
+	|{printf(" COMANDO_R ");}comando_repeat
+	|{printf(" COMANDO_IF ");}comando_if
+	|{printf(" COMANDO_REA ");}comando_read
+	|{printf(" COMANDO_WR ");}comando_write
+	|{printf(" COMANDO_RET ");}comando_return
+	|{printf(" COMANDO_EX ");}comando_exit
+	|{printf(" COMANDO_PR ");}chamada_de_proc
+	|{printf(" COMANDO_ROT ");}rotulo DOIS_PONTOS comando;
 
 comando_atribuicao: variavel ATRIBUICAO expr;
 
-comando_while: WHILE  M0 expr DO M0 lista_de_comandos ENDWHILE;
+comando_while: {printf("A0");} WHILE {printf("A1");} M0 expr {printf("A2");} DO {printf("A3");} M0 lista_comandos {printf("A4");} ENDWHILE {printf("A5");};
 
-comando_repeat: REPEAT M0 lista_de_comandos UNTIL M0 expr;
+comando_repeat: REPEAT M0 lista_comandos UNTIL M0 expr;
 
-comando_if: IF expr THEN M0 lista_de_comandos ENDIF
-	| IF expr THEN M0 lista_de_comandos M1
-	ELSE M0 lista_de_comandos ENDIF;
+comando_if: IF expr THEN M0 lista_comandos ENDIF
+	| IF expr THEN M0 lista_comandos M1
+	ELSE M0 lista_comandos ENDIF;
 
 comando_read: READ variavel;
 
@@ -172,12 +174,26 @@ indices: variavel2 ABRE_PARENTESES expr
 
 variavel2: identificador;
 
+
 expr: 	  expr {printf("EXPR");}
 	| M0 expr
-	| {printf("EXPR-O1");}CONSTANTE OPERADOR expr{printf("EXPR-O2");}
+	| {printf("EXPR-O1");}PROX_OPERADOR OPERADOR expr{printf("EXPR-O2");}
 	| CONSTANTE {printf("EXPR-C");}
-	| variavel {printf("EXPR-V");}; /*ainda falta*/
+	| variavel {printf("EXPR-V");}
+	| ABRE_PARENTESES expr FECHA_PARENTESES; /*ainda falta*/
 
+constante: int_ou_char
+	| booleano;
+
+int_ou_char: inteiro
+	| CONSTANTE;
+
+inteiro: CONSTANTE;
+
+booleano: TRUE_
+	| FALSE_;
+
+identificador: IDENTIFICADOR;
 
 
 %%

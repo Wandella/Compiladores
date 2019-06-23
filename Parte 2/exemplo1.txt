@@ -3,8 +3,8 @@ program
 begin
 	i := 20;
 	while (i > 10) do
-		write(i+10);
-		i := i - 10;
+		write (i+10);
+		i := i - 10
 	endwhile;
 	write i
 end
