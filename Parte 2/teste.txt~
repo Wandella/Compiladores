@@ -1,0 +1,9 @@
+
+program
+ integer : a;
+
+begin
+ a := 886;
+end
+
+

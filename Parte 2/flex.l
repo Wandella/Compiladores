@@ -12,13 +12,11 @@
 /*novo*/
 quebra \n
 /*retirou o \n*/
-delim [ \t] 
+delim [ \t]
 ws {delim}+
 
 /*novo*/
-igualzinho =
-
-samuel samuel
+sinalIgual samuel
 
 /*palavras reservadas*/
 begin begin
@@ -77,59 +75,58 @@ pontoVirgula ;
 doisPontos :
 virgula ,
 
-proxOp [{constante}{identificador}]/{op}
-
 %%
 {quebra} {extern int lineno; lineno++; printf("\n%d-",lineno); }
-{ws} {/*nenhuma acao e nenhum retorno*/} /*Espaços em branco, tabulação e quebra de linha devem ser ignorados.*/
+{ws} {printf("%s",yytext);/*nenhuma acao e nenhum retorno*/} /*Espaços em branco, tabulação e quebra de linha devem ser ignorados.*/
 
-{comentario} {printf("<COMENT,'%s'>\n",yytext);}
+{comentario} {printf("%s",yytext);}
 
-{samuel} {printf("<IGUAL,'%s'>\n",yytext); return SAMUEL;}
+{sinalIgual} {printf("%s",yytext); return SINAL_IGUAL;}
 
-{begin} {printf("<BEGIN,'%s'>\n",yytext); return BEGIN_;}
-{boolean} {printf("<BOOLEAN,'%s'>\n",yytext); return BOOLEAN;}
-{char} {printf("<CHAR,'%s'>\n",yytext); return CHAR;}
-{do} {printf("<DO,'%s'>\n",yytext); return DO;}
-{else} {printf("<ELSE,'%s'>\n",yytext); return ELSE;}
-{end} {printf("<END,'%s'>\n",yytext); return END;}
-{false} {printf("<FALSE,'%s'>\n",yytext); return FALSE_;}
-{endif} {printf("<ENDIF,'%s'>\n",yytext); return ENDIF;}
-{endwhile} {printf("<ENDWHILE,'%s'>\n",yytext); return ENDWHILE;}
-{exit} {printf("<EXIT,'%s'>\n",yytext); return EXIT;}
-{if} {printf("<IF,'%s'>\n",yytext); return IF;}
-{integer} {printf("<INTEGER,'%s'>\n",yytext); return INTEGER;}
-{procedure} {printf("<PROCEDURE,'%s'>\n",yytext); return PROCEDURE;}
-{program} {printf("<PROGRAM,'%s'>\n",yytext); return PROGRAM_;}
-{reference} {printf("<REFERENCE,'%s'>\n",yytext); return REFERENCE;}
-{repeat} {printf("<REPEAT,'%s'>\n",yytext); return REPEAT;}
-{read} {printf("<READ,'%s'>\n",yytext); return READ;}
-{return} {printf("<RETURN,'%s'>\n",yytext); return RETURN;}
-{then} {printf("<THEN,'%s'>\n",yytext); return THEN;}
-{true} {printf("<TRUE,'%s'>\n",yytext); return TRUE_;}
-{type} {printf("<TYPE,'%s'>\n",yytext); return TYPE;}
-{until} {printf("<UNTIL,'%s'>\n",yytext); return UNTIL;}
-{value} {printf("<VALUE,'%s'>\n",yytext); return VALUE;}
-{write} {printf("<WRITE,'%s'>\n",yytext); return WRITE;}
-{while} {printf("<WHILE,'%s'>\n",yytext); return WHILE;}
-{not} {printf("<NOT,'%s'>\n",yytext); return NOT;}
+{begin} {printf("%s",yytext); return BEGIN_;}
+{boolean} {printf("%s",yytext); return BOOLEAN;}
+{char} {printf("%s",yytext); return CHAR;}
+{do} {printf("%s",yytext); return DO;}
+{else} {printf("%s",yytext); return ELSE;}
+{end} {printf("%s",yytext); return END;}
+{false} {printf("%s",yytext); return FALSE_;}
+{endif} {printf("%s",yytext); return ENDIF;}
+{endwhile} {printf("%s",yytext); return ENDWHILE;}
+{exit} {printf("%s",yytext); return EXIT;}
+{if} {printf("%s",yytext); return IF;}
+{integer} {printf("%s",yytext); return INTEGER;}
+{procedure} {printf("%s",yytext); return PROCEDURE;}
+{program} {printf("%s",yytext); return PROGRAM_;}
+{reference} {printf("%s",yytext); return REFERENCE;}
+{repeat} {printf("%s",yytext); return REPEAT;}
+{read} {printf("%s",yytext); return READ;}
+{return} {printf("%s",yytext); return RETURN;}
+{then} {printf("%s",yytext); return THEN;}
+{true} {printf("%s",yytext); return TRUE_;}
+{type} {printf("%s",yytext); return TYPE;}
+{until} {printf("%s",yytext); return UNTIL;}
+{value} {printf("%s",yytext); return VALUE;}
+{write} {printf("%s",yytext); return WRITE;}
+{while} {printf("%s",yytext); return WHILE;}
+{not} {printf("%s",yytext); return NOT;}
 
-{proxOp} {printf("<PROXOP,'%s'>\n",yytext); return PROX_OPERADOR;}
-{op} {printf("<OP,'%s'>\n",yytext); return OPERADOR;}
+{op} {printf("%s",yytext); return OPERADOR;}
 
-{identificador} {printf("<ID,'%s'>\n",yytext); return IDENTIFICADOR;}
+{identificador} {sscanf(yytext, "%s", &yylval.text); printf("%s",yytext); return IDENTIFICADOR;}
 
-{constante} {sscanf(yytext,"%d",&yylval.integer); printf("<CONST,'%d'>",yylval.integer); return CONSTANTE;}
+{constante} {printf("%s",yytext); return CONSTANTE;}
 
-{atribuicao} {printf("<ATRIBUICAO,'%s'>\n",yytext); return ATRIBUICAO;}
-{abreParenteses} {printf("<ABRE_PARENTESES,'%s'>\n",yytext); return ABRE_PARENTESES;}
-{fechaParenteses} {printf("<FECHA_PARENTESES,'%s'>\n",yytext); return FECHA_PARENTESES;}
-{pontoVirgula} {printf("<PONTO_VIRGULA,'%s'>\n",yytext); return PONTO_VIRGULA;}
-{doisPontos} {printf("<DOIS_PONTOS,'%s'>\n",yytext); return DOIS_PONTOS;}
-{virgula} {printf("<VIRGULA,'%s'>\n",yytext); return VIRGULA;}
+{atribuicao} {printf("%s",yytext); return ATRIBUICAO;}
+{abreParenteses} {printf("%s",yytext); return ABRE_PARENTESES;}
+{fechaParenteses} {printf("%s",yytext); return FECHA_PARENTESES;}
+{pontoVirgula} {printf("%s",yytext); return PONTO_VIRGULA;}
+{doisPontos} {printf("%s",yytext); return DOIS_PONTOS;}
+{virgula} {printf("%s",yytext); return VIRGULA;}
 
 
-. {printf("*");return yytext[0];  extern int qtdErro; qtdErro++;}
+. {extern int lineno, qtdErros; printf("### Erro LEXICO próximo a linha %d# ", lineno);return yytext[0]; qtdErros++;exit(1);}
+
+<<EOF>> {extern int lineno, qtdErros; if(qtdErros==0) printf(" Programa sintaticamente correto!\n"); Imprime_Tabela(); exit(0);}
 
 %%
 

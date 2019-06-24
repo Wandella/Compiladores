@@ -78,7 +78,7 @@ extern int yydebug;
     WRITE = 288,
     WHILE = 289,
     NOT = 290,
-    SAMUEL = 291,
+    SINAL_IGUAL = 291,
     ABRE_PARENTESES = 292,
     FECHA_PARENTESES = 293,
     UMINUS = 294
@@ -118,7 +118,7 @@ extern int yydebug;
 #define WRITE 288
 #define WHILE 289
 #define NOT 290
-#define SAMUEL 291
+#define SINAL_IGUAL 291
 #define ABRE_PARENTESES 292
 #define FECHA_PARENTESES 293
 #define UMINUS 294
@@ -128,13 +128,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 4 "y1.y" /* yacc.c:1909  */
+#line 8 "y1.y" /* yacc.c:1909  */
 
  double real;
  int integer;
+ char text[20]; /*FALTA DEFINIR TAMANHO MAX DE IDENTIFICADORES*/
  
 
-#line 138 "y.tab.h" /* yacc.c:1909  */
+#line 139 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

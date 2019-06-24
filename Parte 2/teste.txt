@@ -1,6 +1,10 @@
-program
- integer : a;
-begin
- a := 886 + 8
-end
+/*olha nois ai*/
 
+program
+ integer : WANDELLA; /*jkasn dkn aslkdsa */
+ integer : b;
+begin
+ WANDELLA := 51 + 5 + d + dsdcv;
+ b := 165
+
+end
