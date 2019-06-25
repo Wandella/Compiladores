@@ -122,8 +122,8 @@ lista_comandos: comando
 	|lista_comandos PONTO_VIRGULA M0 comando;
 
 
-lista_ids: IDENTIFICADOR {printf("\n\n\n%s\n\n\n",yylval.text);Instala(yylval.text, tipoVariaveis);}
-	|lista_ids VIRGULA IDENTIFICADOR;
+lista_ids: lista_ids VIRGULA IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);}
+	|IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);};
 
 vazio: /*vazio*/;
 
@@ -201,7 +201,7 @@ int lineno = 1;
 int qtdErros = 0;
 main(){
 	iniciaListaNO(); //inicializa a lista da tabela de simbolos
-	
+	printf("\n%d-",lineno); //inicia a primeira linha do codigo a ser mostrado
 	yyparse(); //chamada do lex
 
 }

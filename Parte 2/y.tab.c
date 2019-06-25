@@ -607,12 +607,12 @@ static const yytype_uint8 yydefact[] =
       47,     0,    10,     0,    47,    28,    31,    32,    47,     0,
       90,     0,     0,    47,     0,     0,     0,    47,    47,    43,
       50,    51,    52,    53,    54,    55,    56,    57,     0,     0,
-      74,    58,     0,     0,    73,    45,    15,    47,     0,    47,
+      74,    58,     0,     0,    73,    46,    15,    47,     0,    47,
       68,    86,    89,    88,     0,    80,    71,     0,    81,    83,
       85,    84,    70,     0,    67,    65,    66,     0,    47,     0,
        0,     0,     0,    72,     0,     0,     8,    42,    47,     0,
       21,     0,    47,    47,     0,     0,     0,     9,    59,    60,
-      76,    75,    46,    47,     0,    49,    29,     0,    23,    82,
+      76,    75,    45,    47,     0,    49,    29,     0,    23,    82,
        0,     0,    47,    47,    44,    30,    41,    40,     0,    33,
        0,    87,     0,     0,    78,    47,     0,     0,     0,    48,
       16,    17,    18,     0,     0,     0,    63,     0,    62,     0,
@@ -734,7 +734,7 @@ static const yytype_uint8 yyr2[] =
        4,     1,     1,     1,     1,     3,     1,     1,     1,     1,
        1,     1,     1,     6,     1,     4,     3,     1,     2,     5,
        5,     1,     1,     1,     3,     1,     1,     1,     1,     4,
-       1,     1,     1,     1,     4,     1,     3,     0,     3,     1,
+       1,     1,     1,     1,     4,     3,     1,     0,     3,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     3,
        3,     7,     6,     6,    10,     2,     2,     2,     2,     1,
        1,     1,     2,     1,     1,     3,     3,     1,     4,     1,
@@ -1453,12 +1453,18 @@ yyreduce:
 
   case 45:
 #line 125 "y1.y" /* yacc.c:1646  */
-    {printf("\n\n\n%s\n\n\n",yylval.text);Instala(yylval.text, tipoVariaveis);}
+    {Instala(yylval.text, tipoVariaveis);}
 #line 1458 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 46:
+#line 126 "y1.y" /* yacc.c:1646  */
+    {Instala(yylval.text, tipoVariaveis);}
+#line 1464 "y.tab.c" /* yacc.c:1646  */
+    break;
 
-#line 1462 "y.tab.c" /* yacc.c:1646  */
+
+#line 1468 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1693,7 +1699,7 @@ int lineno = 1;
 int qtdErros = 0;
 main(){
 	iniciaListaNO(); //inicializa a lista da tabela de simbolos
-	
+	printf("\n%d-",lineno); //inicia a primeira linha do codigo a ser mostrado
 	yyparse(); //chamada do lex
 
 }

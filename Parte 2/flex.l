@@ -16,7 +16,7 @@ delim [ \t]
 ws {delim}+
 
 /*novo*/
-sinalIgual samuel
+sinalIgual =
 
 /*palavras reservadas*/
 begin begin

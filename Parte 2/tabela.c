@@ -22,7 +22,7 @@ void Erro(int num)
 	switch (num) {
 		case 1: printf("\nTabela de Simbolos cheia\n"); break;
 		case 2: printf("\nItem nao foi encontrado\n"); break;
-		case 3: //printf("\nItem ja foi inserido\n"); break;
+		case 3: printf("\nItem ja foi inserido\n"); break;
 		default: ;
 	}
 }
@@ -67,10 +67,28 @@ int Recupera_Entrada(char* X)
 
  void Instala(char* X, int tipoVariavel)
 {
+	int tipoBoolean = 1;
 	//alterações para salvar a variavel na tabela
 	simbolo_t atribut;
 	strcpy(atribut.nome,X);
 	atribut.tipo = tipoVariavel;
+	switch(tipoVariavel){//Identifica e retorna os tipos encontrados
+			case INTEGER: 
+				atribut.valor_inteiro = atoi(X);
+				printf("\n\nATOI = %d",atoi(X));
+				break;
+			case BOOLEAN: 
+				if(strcmp("false",X))  tipoBoolean = 0;
+				atribut.valor_boolean = tipoBoolean;
+				printf("\n\TIPBOOLEAN = %d",tipoBoolean);
+				break;
+			case CHAR: 
+				atribut.valor_char = atoi(X);
+				printf("\n\nATOI = %d",atoi(X));
+				break;
+			default: printf("\nFALTA NOIS\n");break;
+		}	
+
 
 	int K;
 	K = L;
@@ -92,12 +110,31 @@ int Recupera_Entrada(char* X)
 void Imprime_Tabela()
 {
 	int i;
-	printf("Tabela de Simbolos:\n");
+	char nomeTipo[10];
+	int valor;
+
+	printf("\n\nTabela de Simbolos:\n");
 	printf("===================\n\n");
-	printf("INDICE\t\tTIPO\t\tNOME\n");
-	printf("======\t\t====\t\t====\n");
+	printf("INDICE\t\tTIPO\t\tNOME\t\tVALOR\n");
+	printf("======\t\t====\t\t====\t\t====\n");
+
 	for (i = 1; i < L ; i++ )
 	{
-		printf("%d\t\t%d\t\t%s\n", i, tabela_simbolos[i].tipo, tabela_simbolos[i].nome);
+		switch(tabela_simbolos[i].tipo){//Identifica e retorna os tipos encontrados
+			case INTEGER: 
+				strcpy(nomeTipo,"integer");
+				valor = tabela_simbolos[i].valor_inteiro;
+				break;
+			case BOOLEAN: 
+				strcpy(nomeTipo,"boolean");
+				valor = tabela_simbolos[i].valor_boolean;
+				break;
+			case CHAR: 
+				strcpy(nomeTipo,"char");
+				valor = tabela_simbolos[i].valor_char;
+				break;
+			default: strcpy(nomeTipo,"tipo_definido");break;
+		}
+		printf("%d\t\t%s\t\t%s\t\t%d\n", i, nomeTipo, tabela_simbolos[i].nome,valor);
 	}
 }

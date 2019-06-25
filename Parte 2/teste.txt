@@ -1,10 +1,20 @@
 /*olha nois ai*/
 
 program
- integer : WANDELLA; /*jkasn dkn aslkdsa */
+
+ integer procedure funcao (value integer : nomeParametro) :
+	integer : a;
+	begin
+   		b := adrinao	
+  	end
+
+ integer : WANDELLA, samuel; /*jkasn dkn aslkdsa */
  integer : b;
-begin
- WANDELLA := 51 + 5 + d + dsdcv;
- b := 165
+ boolean : adriano;
+ begin
+  WANDELLA := 51 + 5 + d + dsdcv;
+  b := 165;
+  
+  
 
 end
