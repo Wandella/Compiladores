@@ -19,17 +19,17 @@ void iniciaListaNO()
 
 void Erro(int num){
 	switch (num) {
-		case 1: printf("\nTabela de Simbolos cheia\n"); break;
-		case 2: printf("\nItem nao foi encontrado\n"); break;
-		case 3: printf("\nItem ja foi inserido\n"); break;
-		default: ;
+		case 1: printf("\nERRO: Tabela de Simbolos cheia\n"); exit(1); break;
+		case 2: printf("\nERRO: Item nao foi encontrado\n"); exit(2); break;
+		case 3: printf("\nERRO: Item ja foi inserido\n"); exit(3); break;
+		default: printf("\nOUTRO ERRO QUALQUER");
 	}
 }
 
 
 /******************* Funcao de entrada num bloco ********************/
 
- void Entrada_Bloco(){
+ void Entrada_Bloco(){printf("\n\n\nBLOCO = %d",nivel+1);
 	nivel++;
 	if (nivel > NMax) Erro(1);
 	else escopo[nivel] = L;
@@ -37,8 +37,8 @@ void Erro(int num){
 
 /******************** Funcao de saida de um bloco ***********************/
 
- void Saida_Bloco(){
-	L = escopo[nivel];
+ void Saida_Bloco(){printf("\n\n\nBLOCO = %d",nivel-1);
+	escopo[nivel] = L;
 	nivel--;
 }
 
@@ -54,7 +54,7 @@ int Recupera_Entrada(char* X)
         	K--;
         	if( !strcmp(X, tabela_simbolos[K].nome ) ) return K;		// X foi encontrado
 	}
-    	/*Erro(2);*/
+    	Erro(2);
 	return 0;
 }
 
@@ -98,6 +98,7 @@ int Recupera_Entrada(char* X)
 
 	tabela_simbolos[L] = atribut;
 	L++;
+printf("\n\n\nINSTALA = %s %d\n",atribut.nome,L);
 }
 
 /******  Funcao que imprime alguns atributos da tabela de simbolos***********/
@@ -111,7 +112,7 @@ void Imprime_Tabela()
 	printf("\n\nTabela de Simbolos:\n");
 	printf("===================\n\n");
 	printf("INDICE\t\tTIPO\t\tNOME\n");
-	printf("======\t\t====\t\t====\n");
+	printf("======\t\t====\t\t====%d\n",L);
 
 	for (i = 1; i < L ; i++ )
 	{

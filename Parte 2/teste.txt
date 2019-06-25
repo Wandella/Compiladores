@@ -1,20 +1,14 @@
-/*olha nois ai*/
-
 program
-
- integer procedure funcao (value integer : nomeParametro) :
-	integer : a;
-	begin
-   		b := adrinao	
-  	end
-
- integer : WANDELLA, samuel; /*jkasn dkn aslkdsa */
- integer : b;
- boolean : adriano;
- begin
-  WANDELLA := 51 + 5 + d + dsdcv;
-  b := 165;
-  
-  
-
+	integer : i, j;
+procedure int(value integer: nome):
+begin
+	nome := nome
+end;
+begin
+	if weight >60 then group := 5 + 97
+		      else group := (weight + 14) / 15 + 97
+	endif;
+	i := 10;
+	j := 10
 end
+

@@ -4,6 +4,22 @@
 
 int tipoVariaveis; //fica salvo o valor correspondente do tipo, de acordo com a definição do próprio YACC => INTEGER | BOOLEAN | CHAR
 
+
+//analise semantica
+void verificaVariavelAlocada(char *identificador){
+	int nivel;
+	nivel = Recupera_Entrada(identificador);
+	if(nivel==0) exit(3);
+}
+
+void verificaTipo(){
+
+}
+
+void verificaOverflow(){}
+
+void verificaParametros(){}
+
 %}
 %union {
  double real;
@@ -62,9 +78,9 @@ linha:
 	| programa
 	| error{yyerror();exit(2);};
 
-programa: PROGRAM_ M2 declaracoes M0 block;
+programa: PROGRAM_{Entrada_Bloco();/*abre bloco*/} M2 declaracoes M0 block;
 
-block: {Entrada_Bloco();/*abre bloco*/}BEGIN_ lista_comandos M0 END{Saida_Bloco(); /*fecha bloco*/};
+block: BEGIN_ lista_comandos M0 END{Saida_Bloco(); /*fecha bloco*/};
 
 declaracoes: declaracoes M0 declaracao PONTO_VIRGULA
 	| vazio;
@@ -98,7 +114,7 @@ decl_de_proc: proc_cab proc_corpo;
 
 proc_cab: tipo_retornado PROCEDURE M0 nome_do_proc espec_de_parametros;
 
-proc_corpo: DOIS_PONTOS declaracoes M0 block emit_return
+proc_corpo: DOIS_PONTOS {Entrada_Bloco();/*abre bloco*/}declaracoes M0 block emit_return
 	| emit_return;
 
 emit_return: vazio ;
@@ -111,7 +127,7 @@ tipo_retornado: INTEGER
 	| CHAR
 	| vazio;
 
-parametro: modo tipo DOIS_PONTOS IDENTIFICADOR;
+parametro: modo tipo DOIS_PONTOS IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);};
 
 modo: VALUE
 	| REFERENCE;
@@ -122,7 +138,7 @@ lista_comandos: comando
 	|lista_comandos PONTO_VIRGULA M0 comando;
 
 
-lista_ids: lista_ids VIRGULA IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);}
+lista_ids: lista_ids VIRGULA IDENTIFICADOR{printf("%s",yylval.text);Instala(yylval.text, tipoVariaveis);}
 	|IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);};
 
 vazio: /*vazio*/;
@@ -192,7 +208,7 @@ inteiro: CONSTANTE;
 booleano: TRUE_
 	| FALSE_;
 
-identificador: IDENTIFICADOR;
+identificador: IDENTIFICADOR{verificaVariavelAlocada(yylval.text);};
 
 
 %%

@@ -1,18 +1,16 @@
 %{
 #include <stdio.h>
-#include "tabela.h"
-
-int tipoVariaveis; //fica salvo o valor correspondente do tipo, de acordo com a definição do próprio YACC => INTEGER | BOOLEAN | CHAR
-
 %}
 %union {
  double real;
  int integer;
- char text[20]; /*FALTA DEFINIR TAMANHO MAX DE IDENTIFICADORES*/
  }
+
 %token <integer> INTEGER
 %token <constante> CONSTANTE
 %token <operador> OPERADOR
+%token <proxOp> PROX_OPERADOR
+
 %token <program> PROGRAM_
 %token <identificador> IDENTIFICADOR
 %token <pronto_virgula> PONTO_VIRGULA
@@ -55,19 +53,21 @@ int tipoVariaveis; //fica salvo o valor correspondente do tipo, de acordo com a 
 //%left '*' '/'
 %nonassoc UMINUS
 %%
-linhas: /*vazio*/
- 	| linhas linha;
+linhas: /* vazio */ {printf("\n");}
+ | {printf("LL");} linhas linha {printf("LL");}
+ ;
+linha: {printf("q");} |
+ | programa
+ | error  {yyerror();}
+ ;
 
-linha: 
-	| programa
-	| error{yyerror();exit(2);};
+programa: PROGRAM_ {printf("0");} M2 {printf("0");} declaracoes {printf("0");} M0 {printf("0");} block
+	| /**/ {printf("0");};
 
-programa: PROGRAM_ M2 declaracoes M0 block;
-
-block: {Entrada_Bloco();/*abre bloco*/}BEGIN_ lista_comandos M0 END{Saida_Bloco(); /*fecha bloco*/};
+block: {printf(" BLOCO0 ");} BEGIN_ {printf(" BLOCO1 ");} lista_comandos {printf(" BLOCO2 ");} M0 END {printf(" BLOCO3 ");};
 
 declaracoes: declaracoes M0 declaracao PONTO_VIRGULA
-	| vazio;
+	| vazio {printf("1");};
 
 declaracao: decl_de_var
 	| def_de_tipo
@@ -75,9 +75,9 @@ declaracao: decl_de_var
 
 decl_de_var: tipo DOIS_PONTOS lista_ids;
 
-tipo: INTEGER{tipoVariaveis = INTEGER;}
-	| BOOLEAN{tipoVariaveis = BOOLEAN;}
-	| CHAR{tipoVariaveis = CHAR;}
+tipo: INTEGER
+	| BOOLEAN
+	| CHAR
 	| tipo_definido ;
 
 M0: vazio;
@@ -118,32 +118,32 @@ modo: VALUE
 
 nome_do_proc: IDENTIFICADOR;
 
-lista_comandos: comando
-	|lista_comandos PONTO_VIRGULA M0 comando;
+lista_comandos: {printf(" LISTA_COMANDOS1_1 ");}comando {printf(" LISTA_COMANDOS1_2 ");}
+	| {printf(" LISTA_COMANDOS2_0 ");} lista_comandos {printf(" LISTA_COMANDOS2_1 ");} PONTO_VIRGULA M0 {printf(" LISTA_COMANDOS2_2 ");} comando {printf(" LISTA_COMANDOS2_3 ");};
 
 
-lista_ids: lista_ids VIRGULA IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);}
-	|IDENTIFICADOR{Instala(yylval.text, tipoVariaveis);};
+lista_ids: IDENTIFICADOR
+	| lista_ids VIRGULA IDENTIFICADOR;
 
 vazio: /*vazio*/;
 
 espec_de_parametros: ABRE_PARENTESES lista_de_parametros FECHA_PARENTESES
-	|vazio;
+	| vazio;
 
-comando: comando_atribuicao
-	|comando_while
-	|comando_repeat
-	|comando_if
-	|comando_read
-	|comando_write
-	|comando_return
-	|comando_exit
-	|chamada_de_proc
-	|rotulo DOIS_PONTOS comando;
+comando: {printf(" COMANDO_A ");}comando_atribuicao
+	|{printf(" COMANDO_WH ");}comando_while
+	|{printf(" COMANDO_R ");}comando_repeat
+	|{printf(" COMANDO_IF ");}comando_if
+	|{printf(" COMANDO_REA ");}comando_read
+	|{printf(" COMANDO_WR ");}comando_write
+	|{printf(" COMANDO_RET ");}comando_return
+	|{printf(" COMANDO_EX ");}comando_exit
+	|{printf(" COMANDO_PR ");}chamada_de_proc
+	|{printf(" COMANDO_ROT ");}rotulo DOIS_PONTOS comando;
 
 comando_atribuicao: variavel ATRIBUICAO expr;
 
-comando_while: WHILE M0 expr DO M0 lista_comandos ENDWHILE;
+comando_while: {printf("A0");} WHILE {printf("A1");} M0 expr {printf("A2");} DO {printf("A3");} M0 lista_comandos {printf("A4");} ENDWHILE {printf("A5");};
 
 comando_repeat: REPEAT M0 lista_comandos UNTIL M0 expr;
 
@@ -175,11 +175,12 @@ indices: variavel2 ABRE_PARENTESES expr
 variavel2: identificador;
 
 
-expr: expr OPERADOR M0 expr
-	|expr
-	|variavel
-	|constante
-	|ABRE_PARENTESES expr FECHA_PARENTESES; /*ainda falta*/
+expr: 	  expr {printf("EXPR");}
+	| M0 expr
+	| {printf("EXPR-O1");}PROX_OPERADOR OPERADOR expr{printf("EXPR-O2");}
+	| CONSTANTE {printf("EXPR-C");}
+	| variavel {printf("EXPR-V");}
+	| ABRE_PARENTESES expr FECHA_PARENTESES; /*ainda falta*/
 
 constante: int_ou_char
 	| booleano;
@@ -196,21 +197,20 @@ identificador: IDENTIFICADOR;
 
 
 %%
-extern YYSTYPE yylval; //pra pegar os atributos do token lido
 int lineno = 1;
-int qtdErros = 0;
+int qtdErro = 0;
 main(){
-	iniciaListaNO(); //inicializa a lista da tabela de simbolos
-	printf("\n%d-",lineno); //inicia a primeira linha do codigo a ser mostrado
-	yyparse(); //chamada do lex
+yyparse();
 
+if(qtdErro > 0){
+	printf("\n Ha erros no arquivo");
+}else{
+	printf("\n Nao ha erros no arquivo. Compilado com sucesso!");
 }
-
-/*printa o erro sintatico*/
+}
 yyerror(s)
 char *s;
-{ //chamado quando ha erros
-//printf("************************* ERRO DE SINTAXE: %s", s);
-printf("\n************************* ERRO Sintático próximo a linha %d\n", lineno);
-
+{
+printf("************************* ERRO DE SINTAXE: %s", s);
+printf(" na linha %d\n", lineno);
 }
