@@ -78,6 +78,7 @@ void verificaVariavelAlocada(char *identificador){
 }
 
 void verificaTipo(int tipo1, int tipo2, int linha){
+printf("\n\n%d == %d\n\n",tipo1,tipo2);
 	if(tipo1 != tipo2){
 		printf("Erro: tipos diferentes proximo a linha  %d", linha);
 		exit(4);
@@ -94,7 +95,7 @@ void verificaOverflow(){}
 void verificaParametros(){}
 
 
-#line 98 "y.tab.c" /* yacc.c:339  */
+#line 99 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -212,7 +213,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "y1.y" /* yacc.c:355  */
+#line 33 "y1.y" /* yacc.c:355  */
 
  int tipoVariavel;
  int operador;
@@ -221,7 +222,7 @@ union YYSTYPE
  char text[20]; /*FALTA DEFINIR TAMANHO MAX DE IDENTIFICADORES*/
  
 
-#line 225 "y.tab.c" /* yacc.c:355  */
+#line 226 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -238,7 +239,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 242 "y.tab.c" /* yacc.c:358  */
+#line 243 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -539,16 +540,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    94,    94,    95,    97,    98,    99,   101,   103,   105,
-     106,   108,   109,   110,   112,   114,   115,   116,   117,   119,
-     120,   121,   123,   125,   127,   129,   131,   133,   135,   135,
-     137,   138,   140,   142,   143,   145,   146,   147,   148,   150,
-     152,   153,   155,   157,   158,   161,   162,   164,   166,   167,
-     169,   170,   171,   172,   173,   174,   175,   176,   177,   178,
-     180,   182,   184,   186,   187,   190,   192,   194,   196,   198,
-     200,   201,   203,   205,   206,   208,   209,   211,   214,   215,
-     216,   217,   218,   220,   221,   223,   224,   226,   228,   229,
-     231
+       0,    96,    96,    97,    99,   100,   101,   103,   105,   107,
+     108,   110,   111,   112,   114,   116,   117,   118,   119,   121,
+     122,   123,   125,   127,   129,   131,   133,   135,   137,   137,
+     139,   140,   142,   144,   145,   147,   148,   149,   150,   152,
+     154,   155,   157,   159,   160,   163,   164,   166,   168,   169,
+     171,   172,   173,   174,   175,   176,   177,   178,   179,   180,
+     182,   184,   186,   188,   189,   192,   194,   196,   198,   200,
+     202,   203,   205,   207,   208,   210,   211,   213,   216,   217,
+     218,   219,   220,   222,   223,   225,   226,   228,   230,   231,
+     233
 };
 #endif
 
@@ -1442,115 +1443,157 @@ yyreduce:
   switch (yyn)
     {
         case 6:
-#line 99 "y1.y" /* yacc.c:1646  */
+#line 101 "y1.y" /* yacc.c:1646  */
     {yyerror();exit(2);}
-#line 1448 "y.tab.c" /* yacc.c:1646  */
+#line 1449 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 103 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel) = 500;}
+#line 1455 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 103 "y1.y" /* yacc.c:1646  */
+#line 105 "y1.y" /* yacc.c:1646  */
     {Saida_Bloco(); /*fecha bloco*/}
-#line 1454 "y.tab.c" /* yacc.c:1646  */
+#line 1461 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 114 "y1.y" /* yacc.c:1646  */
-    {tipoVariaveis = INTEGER; (yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
-#line 1460 "y.tab.c" /* yacc.c:1646  */
+#line 116 "y1.y" /* yacc.c:1646  */
+    {tipoVariaveis = INTEGER; (yyval.tipoVariavel)=INTEGER;}
+#line 1467 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 115 "y1.y" /* yacc.c:1646  */
-    {tipoVariaveis = BOOLEAN; (yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
-#line 1466 "y.tab.c" /* yacc.c:1646  */
+#line 117 "y1.y" /* yacc.c:1646  */
+    {tipoVariaveis = BOOLEAN; (yyval.tipoVariavel)=BOOLEAN;}
+#line 1473 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 116 "y1.y" /* yacc.c:1646  */
-    {tipoVariaveis = CHAR; (yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
-#line 1472 "y.tab.c" /* yacc.c:1646  */
+#line 118 "y1.y" /* yacc.c:1646  */
+    {tipoVariaveis = CHAR; (yyval.tipoVariavel)=CHAR;}
+#line 1479 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 135 "y1.y" /* yacc.c:1646  */
+#line 137 "y1.y" /* yacc.c:1646  */
     {Entrada_Bloco();/*abre bloco*/}
-#line 1478 "y.tab.c" /* yacc.c:1646  */
+#line 1485 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 150 "y1.y" /* yacc.c:1646  */
+#line 152 "y1.y" /* yacc.c:1646  */
     {Instala(yylval.text, tipoVariaveis);}
-#line 1484 "y.tab.c" /* yacc.c:1646  */
+#line 1491 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 161 "y1.y" /* yacc.c:1646  */
+#line 163 "y1.y" /* yacc.c:1646  */
     {printf("%s",yylval.text);Instala(yylval.text, tipoVariaveis);}
-#line 1490 "y.tab.c" /* yacc.c:1646  */
+#line 1497 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 162 "y1.y" /* yacc.c:1646  */
+#line 164 "y1.y" /* yacc.c:1646  */
     {Instala(yylval.text, tipoVariaveis);}
-#line 1496 "y.tab.c" /* yacc.c:1646  */
+#line 1503 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 180 "y1.y" /* yacc.c:1646  */
+#line 182 "y1.y" /* yacc.c:1646  */
     {extern lineno; verificaTipo((yyvsp[-2].tipoVariavel),(yyvsp[0].tipoVariavel),lineno);}
-#line 1502 "y.tab.c" /* yacc.c:1646  */
+#line 1509 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 200 "y1.y" /* yacc.c:1646  */
+#line 202 "y1.y" /* yacc.c:1646  */
     {(yyval.tipoVariavel) = recuperaTipo((yyvsp[0].text));}
-#line 1508 "y.tab.c" /* yacc.c:1646  */
+#line 1515 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 214 "y1.y" /* yacc.c:1646  */
+#line 216 "y1.y" /* yacc.c:1646  */
     {extern lineno; verificaTipo((yyvsp[-3].tipoVariavel),(yyvsp[0].tipoVariavel),lineno);}
-#line 1514 "y.tab.c" /* yacc.c:1646  */
+#line 1521 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 215 "y1.y" /* yacc.c:1646  */
+#line 217 "y1.y" /* yacc.c:1646  */
     {(yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
-#line 1520 "y.tab.c" /* yacc.c:1646  */
+#line 1527 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 216 "y1.y" /* yacc.c:1646  */
+#line 218 "y1.y" /* yacc.c:1646  */
     {(yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
-#line 1526 "y.tab.c" /* yacc.c:1646  */
+#line 1533 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 217 "y1.y" /* yacc.c:1646  */
-    {(yyval.tipoVariavel)=INTEGER;}
-#line 1532 "y.tab.c" /* yacc.c:1646  */
+#line 219 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
+#line 1539 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 218 "y1.y" /* yacc.c:1646  */
+#line 220 "y1.y" /* yacc.c:1646  */
     {(yyval.tipoVariavel)=(yyvsp[-1].tipoVariavel);}
-#line 1538 "y.tab.c" /* yacc.c:1646  */
+#line 1545 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 83:
+#line 222 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=(yyvsp[0].tipoVariavel);}
+#line 1551 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 84:
+#line 223 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=BOOLEAN;}
+#line 1557 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 85:
+#line 225 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=INTEGER;}
+#line 1563 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 86:
+#line 226 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=INTEGER;}
+#line 1569 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 226 "y1.y" /* yacc.c:1646  */
-    {(yyval.integer) = (yyvsp[0].integer);}
-#line 1544 "y.tab.c" /* yacc.c:1646  */
+#line 228 "y1.y" /* yacc.c:1646  */
+    {(yyval.integer) = INTEGER;}
+#line 1575 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 88:
+#line 230 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=BOOLEAN;}
+#line 1581 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 89:
+#line 231 "y1.y" /* yacc.c:1646  */
+    {(yyval.tipoVariavel)=BOOLEAN;}
+#line 1587 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 231 "y1.y" /* yacc.c:1646  */
+#line 233 "y1.y" /* yacc.c:1646  */
     {verificaVariavelAlocada((yyvsp[0].text)); strcpy((yyval.text),(yyvsp[0].text));}
-#line 1550 "y.tab.c" /* yacc.c:1646  */
+#line 1593 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1554 "y.tab.c" /* yacc.c:1646  */
+#line 1597 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1778,7 +1821,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 234 "y1.y" /* yacc.c:1906  */
+#line 236 "y1.y" /* yacc.c:1906  */
 
 extern YYSTYPE yylval; //pra pegar os atributos do token lido
 int lineno = 1;

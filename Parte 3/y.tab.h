@@ -128,7 +128,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "y1.y" /* yacc.c:1909  */
+#line 33 "y1.y" /* yacc.c:1909  */
 
  int tipoVariavel;
  int operador;

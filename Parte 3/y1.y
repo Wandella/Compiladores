@@ -13,6 +13,7 @@ void verificaVariavelAlocada(char *identificador){
 }
 
 void verificaTipo(int tipo1, int tipo2, int linha){
+printf("\n\n%d == %d\n\n",tipo1,tipo2);
 	if(tipo1 != tipo2){
 		printf("Erro: tipos diferentes proximo a linha  %d", linha);
 		exit(4);
@@ -39,7 +40,7 @@ void verificaParametros(){}
 %token <tipoVariavel> INTEGER
 %token <integer> CONSTANTE
 %token <operador> OPERADOR
-%token <program> PROGRAM_
+%token <simbolo_str> PROGRAM_
 %token <text> IDENTIFICADOR
 %token <pronto_virgula> PONTO_VIRGULA
 %token <begin> BEGIN_
@@ -81,9 +82,10 @@ void verificaParametros(){}
 %type <tipoVariavel> expr;
 %type <tipoVariavel> variavel;
 %type <tipoVariavel> tipo;
-%type <tipoVariavel> integer;
-%type <tipoVariavel> boolean;
-%type <tipoVariavel> char;
+%type <tipoVariavel> booleano;
+%type <tipoVariavel> int_ou_char;
+%type <tipoVariavel> programa;
+%type <tipoVariavel> constante;
 
 //%type <program> programa;
 //%token <''> M0;
@@ -98,7 +100,7 @@ linha:
 	| programa
 	| error{yyerror();exit(2);};
 
-programa: PROGRAM_ M2 declaracoes M0 block;
+programa: PROGRAM_ M2 declaracoes M0 block{$$ = 500;};
 
 block: BEGIN_ lista_comandos M0 END{Saida_Bloco(); /*fecha bloco*/};
 
@@ -111,9 +113,9 @@ declaracao: decl_de_var
 
 decl_de_var: tipo DOIS_PONTOS lista_ids;
 
-tipo: INTEGER{tipoVariaveis = INTEGER; $$=$1;}
-	| BOOLEAN{tipoVariaveis = BOOLEAN; $$=$1;}
-	| CHAR{tipoVariaveis = CHAR; $$=$1;}
+tipo: INTEGER{tipoVariaveis = INTEGER; $$=INTEGER;}
+	| BOOLEAN{tipoVariaveis = BOOLEAN; $$=BOOLEAN;}
+	| CHAR{tipoVariaveis = CHAR; $$=CHAR;}
 	| tipo_definido ;
 
 M0: vazio;
@@ -214,19 +216,19 @@ variavel2: identificador;
 expr: expr OPERADOR M0 expr {extern lineno; verificaTipo($1,$4,lineno);}
 	|expr{$$=$1;}
 	|variavel{$$=$1;}
-	|constante{$$=INTEGER;}
+	|constante{$$=$1;}
 	|ABRE_PARENTESES expr FECHA_PARENTESES{$$=$2;}; /*ainda falta*/
 
-constante: int_ou_char
-	| booleano;
+constante: int_ou_char{$$=$1;}
+	| booleano{$$=BOOLEAN;};
 
-int_ou_char: inteiro
-	| CONSTANTE;
+int_ou_char: inteiro{$$=INTEGER;}
+	| CONSTANTE{$$=INTEGER;};
 
-inteiro: CONSTANTE {$$ = $1;};
+inteiro: CONSTANTE {$$ = INTEGER;};
 
-booleano: TRUE_
-	| FALSE_;
+booleano: TRUE_{$$=BOOLEAN;}
+	| FALSE_{$$=BOOLEAN;};
 
 identificador: IDENTIFICADOR{verificaVariavelAlocada($1); strcpy($$,$1);};
 
