@@ -128,14 +128,16 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 24 "y1.y" /* yacc.c:1909  */
+#line 32 "y1.y" /* yacc.c:1909  */
 
+ int tipoVariavel;
+ int operador;
  double real;
  int integer;
  char text[20]; /*FALTA DEFINIR TAMANHO MAX DE IDENTIFICADORES*/
  
 
-#line 139 "y.tab.h" /* yacc.c:1909  */
+#line 141 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

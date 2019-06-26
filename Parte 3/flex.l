@@ -84,8 +84,8 @@ virgula ,
 {sinalIgual} {printf("%s",yytext); return SINAL_IGUAL;}
 
 {begin} {printf("%s",yytext); return BEGIN_;}
-{boolean} {printf("%s",yytext); return BOOLEAN;}
-{char} {printf("%s",yytext); return CHAR;}
+{boolean} {printf("%s",yytext); yylval.tipoVariavel = BOOLEAN; return BOOLEAN;}
+{char} {printf("%s",yytext); yylval.tipoVariavel = CHAR; return CHAR;}
 {do} {printf("%s",yytext); return DO;}
 {else} {printf("%s",yytext); return ELSE;}
 {end} {printf("%s",yytext); return END;}
@@ -94,7 +94,7 @@ virgula ,
 {endwhile} {printf("%s",yytext); return ENDWHILE;}
 {exit} {printf("%s",yytext); return EXIT;}
 {if} {printf("%s",yytext); return IF;}
-{integer} {printf("%s",yytext); return INTEGER;}
+{integer} {printf("%s",yytext); yylval.tipoVariavel = INTEGER; return INTEGER;}
 {procedure} {printf("%s",yytext); return PROCEDURE;}
 {program} {printf("%s",yytext); return PROGRAM_;}
 {reference} {printf("%s",yytext); return REFERENCE;}
@@ -110,11 +110,11 @@ virgula ,
 {while} {printf("%s",yytext); return WHILE;}
 {not} {printf("%s",yytext); return NOT;}
 
-{op} {printf("%s",yytext); return OPERADOR;}
+{op} {printf("%s",yytext); yylval.operador = atoi(yytext); return OPERADOR;}
 
 {identificador} {sscanf(yytext, "%s", &yylval.text); printf("%s",yytext); return IDENTIFICADOR;}
 
-{constante} {printf("%s",yytext); return CONSTANTE;}
+{constante} {printf("%s",yytext); yylval.integer = atoi(yytext); return CONSTANTE;}
 
 {atribuicao} {printf("%s",yytext); return ATRIBUICAO;}
 {abreParenteses} {printf("%s",yytext); return ABRE_PARENTESES;}

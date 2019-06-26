@@ -12,8 +12,16 @@ void verificaVariavelAlocada(char *identificador){
 	if(nivel==0) exit(3);
 }
 
-void verificaTipo(){
+void verificaTipo(int tipo1, int tipo2, int linha){
+	if(tipo1 != tipo2){
+		printf("Erro: tipos diferentes proximo a linha  %d", linha);
+		exit(4);
+	}
+}
 
+int recuperaTipo(char* nomeVariavel){ //recupera a variavel e retorna o tipo dela de acordo com a tabela de simbolos
+	int posicao = Recupera_Entrada(nomeVariavel);
+	return tabela_simbolos[posicao].tipo;
 }
 
 void verificaOverflow(){}
@@ -22,15 +30,17 @@ void verificaParametros(){}
 
 %}
 %union {
+ int tipoVariavel;
+ int operador;
  double real;
  int integer;
  char text[20]; /*FALTA DEFINIR TAMANHO MAX DE IDENTIFICADORES*/
  }
-%token <integer> INTEGER
-%token <constante> CONSTANTE
+%token <tipoVariavel> INTEGER
+%token <integer> CONSTANTE
 %token <operador> OPERADOR
 %token <program> PROGRAM_
-%token <identificador> IDENTIFICADOR
+%token <text> IDENTIFICADOR
 %token <pronto_virgula> PONTO_VIRGULA
 %token <begin> BEGIN_
 %token <atribuicao> ATRIBUICAO
@@ -38,8 +48,8 @@ void verificaParametros(){}
 %token <doisPontos> DOIS_PONTOS
 %token <virgula> VIRGULA
 
-%token <boolean> BOOLEAN
-%token <char> CHAR
+%token <tipoVariavel> BOOLEAN
+%token <tipoVariavel> CHAR
 %token <do> DO
 %token <else> ELSE
 %token <false_> FALSE_
@@ -65,6 +75,16 @@ void verificaParametros(){}
 %token <abre_parenteses> ABRE_PARENTESES
 %token <fecha_parenteses> FECHA_PARENTESES
 
+%type <text> identificador;
+%type <integer> inteiro;
+
+%type <tipoVariavel> expr;
+%type <tipoVariavel> variavel;
+%type <tipoVariavel> tipo;
+%type <tipoVariavel> integer;
+%type <tipoVariavel> boolean;
+%type <tipoVariavel> char;
+
 //%type <program> programa;
 //%token <''> M0;
 //%left '-'
@@ -78,7 +98,7 @@ linha:
 	| programa
 	| error{yyerror();exit(2);};
 
-programa: PROGRAM_{Entrada_Bloco();/*abre bloco*/} M2 declaracoes M0 block;
+programa: PROGRAM_ M2 declaracoes M0 block;
 
 block: BEGIN_ lista_comandos M0 END{Saida_Bloco(); /*fecha bloco*/};
 
@@ -91,9 +111,9 @@ declaracao: decl_de_var
 
 decl_de_var: tipo DOIS_PONTOS lista_ids;
 
-tipo: INTEGER{tipoVariaveis = INTEGER;}
-	| BOOLEAN{tipoVariaveis = BOOLEAN;}
-	| CHAR{tipoVariaveis = CHAR;}
+tipo: INTEGER{tipoVariaveis = INTEGER; $$=$1;}
+	| BOOLEAN{tipoVariaveis = BOOLEAN; $$=$1;}
+	| CHAR{tipoVariaveis = CHAR; $$=$1;}
 	| tipo_definido ;
 
 M0: vazio;
@@ -112,9 +132,9 @@ tipo_definido: IDENTIFICADOR;
 
 decl_de_proc: proc_cab proc_corpo;
 
-proc_cab: tipo_retornado PROCEDURE M0 nome_do_proc espec_de_parametros;
+proc_cab: tipo_retornado PROCEDURE M0 nome_do_proc {Entrada_Bloco();/*abre bloco*/}espec_de_parametros;
 
-proc_corpo: DOIS_PONTOS {Entrada_Bloco();/*abre bloco*/}declaracoes M0 block emit_return
+proc_corpo: DOIS_PONTOS declaracoes M0 block emit_return
 	| emit_return;
 
 emit_return: vazio ;
@@ -157,7 +177,7 @@ comando: comando_atribuicao
 	|chamada_de_proc
 	|rotulo DOIS_PONTOS comando;
 
-comando_atribuicao: variavel ATRIBUICAO expr;
+comando_atribuicao: variavel ATRIBUICAO expr {extern lineno; verificaTipo($1,$3,lineno);};
 
 comando_while: WHILE M0 expr DO M0 lista_comandos ENDWHILE;
 
@@ -177,7 +197,7 @@ comando_exit: EXIT identificador;
 
 rotulo: identificador;
 
-variavel: identificador
+variavel: identificador{$$ = recuperaTipo($1);}
 	| chamada_ou_indexacao;
 
 chamada_ou_indexacao: indices FECHA_PARENTESES;
@@ -191,11 +211,11 @@ indices: variavel2 ABRE_PARENTESES expr
 variavel2: identificador;
 
 
-expr: expr OPERADOR M0 expr
-	|expr
-	|variavel
-	|constante
-	|ABRE_PARENTESES expr FECHA_PARENTESES; /*ainda falta*/
+expr: expr OPERADOR M0 expr {extern lineno; verificaTipo($1,$4,lineno);}
+	|expr{$$=$1;}
+	|variavel{$$=$1;}
+	|constante{$$=INTEGER;}
+	|ABRE_PARENTESES expr FECHA_PARENTESES{$$=$2;}; /*ainda falta*/
 
 constante: int_ou_char
 	| booleano;
@@ -203,12 +223,12 @@ constante: int_ou_char
 int_ou_char: inteiro
 	| CONSTANTE;
 
-inteiro: CONSTANTE;
+inteiro: CONSTANTE {$$ = $1;};
 
 booleano: TRUE_
 	| FALSE_;
 
-identificador: IDENTIFICADOR{verificaVariavelAlocada(yylval.text);};
+identificador: IDENTIFICADOR{verificaVariavelAlocada($1); strcpy($$,$1);};
 
 
 %%

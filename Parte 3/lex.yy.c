@@ -876,12 +876,12 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 87 "flex.l"
-{printf("%s",yytext); return BOOLEAN;}
+{printf("%s",yytext); yylval.tipoVariavel = BOOLEAN; return BOOLEAN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 88 "flex.l"
-{printf("%s",yytext); return CHAR;}
+{printf("%s",yytext); yylval.tipoVariavel = CHAR; return CHAR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -926,7 +926,7 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 97 "flex.l"
-{printf("%s",yytext); return INTEGER;}
+{printf("%s",yytext); yylval.tipoVariavel = INTEGER; return INTEGER;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -1001,7 +1001,7 @@ YY_RULE_SETUP
 case 31:
 YY_RULE_SETUP
 #line 113 "flex.l"
-{printf("%s",yytext); return OPERADOR;}
+{printf("%s",yytext); yylval.operador = atoi(yytext); return OPERADOR;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
@@ -1011,7 +1011,7 @@ YY_RULE_SETUP
 case 33:
 YY_RULE_SETUP
 #line 117 "flex.l"
-{printf("%s",yytext); return CONSTANTE;}
+{printf("%s",yytext); yylval.integer = atoi(yytext); return CONSTANTE;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP

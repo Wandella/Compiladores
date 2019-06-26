@@ -68,6 +68,7 @@ int Recupera_Entrada(char* X)
 	simbolo_t atribut;
 	strcpy(atribut.nome,X);
 	atribut.tipo = tipoVariavel;
+	atribut.nivel = nivel;
 	/*switch(tipoVariavel){//Identifica e retorna os tipos encontrados
 			case INTEGER: 
 				atribut.valor_inteiro = atoi(X);
@@ -98,7 +99,7 @@ int Recupera_Entrada(char* X)
 
 	tabela_simbolos[L] = atribut;
 	L++;
-printf("\n\n\nINSTALA = %s %d\n",atribut.nome,L);
+//printf("\n\n\nINSTALA = %s %d\n",atribut.nome,L);
 }
 
 /******  Funcao que imprime alguns atributos da tabela de simbolos***********/
@@ -111,8 +112,8 @@ void Imprime_Tabela()
 
 	printf("\n\nTabela de Simbolos:\n");
 	printf("===================\n\n");
-	printf("INDICE\t\tTIPO\t\tNOME\n");
-	printf("======\t\t====\t\t====%d\n",L);
+	printf("INDICE\t\tTIPO\t\tNOME\t\tNIVEL\n");
+	printf("======\t\t====\t\t====\t\t====\n");
 
 	for (i = 1; i < L ; i++ )
 	{
@@ -131,6 +132,6 @@ void Imprime_Tabela()
 				break;
 			default: strcpy(nomeTipo,"tipo_definido");break;
 		}
-		printf("%d\t\t%s\t\t%s\n", i, nomeTipo, tabela_simbolos[i].nome);
+		printf("%d\t\t%s\t\t%s\t\t%d\n", i, nomeTipo, tabela_simbolos[i].nome, tabela_simbolos[i].nivel);
 	}
 }

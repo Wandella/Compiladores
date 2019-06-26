@@ -1,3 +1,7 @@
 lista_de_comandos => lista_comandos
 bloco => block
 lista_de_procedimentos => lista_proc
+
+erros semanticos tratados:
+	verifica se variavel ja foi declarada anteriormente, no mesmo nivel ou inferior: da erro se nao foi e esta sendo usada; se ja foi e é declarada novamente no msm nivel
+	verifica o tipo de variavel quando é feito uma atribuiçao 

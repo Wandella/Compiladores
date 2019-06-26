@@ -1,20 +1,24 @@
 program
-	integer : i, j;
-procedure int ( value integer: nome ):
+/*nivel 1*/
+integer : i, j;
+	/*nivel 2*/
+	procedure int ( value integer: nome, value integer : b ) : 
 	integer : i;
-begin
-	nome := i
-end;
+	begin
+		nome := b /*deve dar erro de tipo*/
+	end;
 
-procedure funcao2 ( value boolean : a1 ):
-begin
-	return 5
-end;
+	/*nivel 2*/
+	procedure funcao2 ( value boolean : a1 ):
+	begin
+		return 5
+	end;
 
-begin
-	if i >60 then j := 5 + 97
-		      else nome := (i + 14) / 15 + 97
-	endif;
-	i := 10;
-	j := 10
-end
+	/*nivel 2*/
+	begin
+		if i >60 then j := 5 + 97
+				  else nome := (i + 14) + 15 + 97
+		endif;
+		i := 10;
+		j := 10
+	end
